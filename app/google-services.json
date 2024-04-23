@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "741232730277",
+    "firebase_url": "https://ex14fb-default-rtdb.firebaseio.com",
+    "project_id": "ex14fb",
+    "storage_bucket": "ex14fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741232730277:android:fe51e440f27e911ba5ad4c",
+        "android_client_info": {
+          "package_name": "com.example.ex14_proj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMYPgfC4k-6S4unSfolsNqy1ghFUJ__90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741232730277:android:86f975513bbcd654a5ad4c",
+        "android_client_info": {
+          "package_name": "com.example.ex14_project2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMYPgfC4k-6S4unSfolsNqy1ghFUJ__90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
