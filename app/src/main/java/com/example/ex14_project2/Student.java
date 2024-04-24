@@ -6,14 +6,12 @@ public class Student {
     private String iD1;
     private String grade;
     private String classNumber;
-    private String canVaccine;
-    private String firstVaccine;
-    private String secondVaccine;
-    private String vaccine_site;
-    private String vaccine_date;
+    private Boolean canVaccine;
+    private Boolean firstVaccine;
+    private Boolean secondVaccine;
 
     public Student(String name, String lastName, String iD1, String grade, String classNumber,
-                   String canVaccine, String firstVaccine, String secondVaccine, String vaccine_site, String vaccine_date) {
+                   Boolean canVaccine, Boolean firstVaccine, Boolean secondVaccine) {
         this.name = name;
         this.lastName = lastName;
         this.iD1 = iD1;
@@ -22,8 +20,6 @@ public class Student {
         this.canVaccine = canVaccine;
         this.firstVaccine = firstVaccine;
         this.secondVaccine = secondVaccine;
-        this.vaccine_site = vaccine_site;
-        this.vaccine_date = vaccine_date;
     }
 
     // Setters
@@ -47,25 +43,18 @@ public class Student {
         this.classNumber = classNumber;
     }
 
-    public void setCanVaccine(String canVaccine) {
+    public void setCanVaccine(Boolean canVaccine) {
         this.canVaccine = canVaccine;
     }
 
-    public void setFirstVaccine(String firstVaccine) {
+    public void setFirstVaccine(Boolean firstVaccine) {
         this.firstVaccine = firstVaccine;
     }
 
-    public void setSecondVaccine(String secondVaccine) {
+    public void setSecondVaccine(Boolean secondVaccine) {
         this.secondVaccine = secondVaccine;
     }
-    public void setVaccine_site(String vaccine_site)
-    {
-        this.vaccine_site = vaccine_site;
-    }
-    public void setVaccine_date(String vaccine_date)
-    {
-        this.vaccine_date = vaccine_date;
-    }
+
 
     public String getName() {
         return name;
@@ -87,23 +76,16 @@ public class Student {
         return classNumber;
     }
 
-    public String getCanVaccine() {
+    public Boolean getCanVaccine() {
         return canVaccine;
     }
 
-    public String getFirstVaccine() {
+    public Boolean getFirstVaccine() {
         return firstVaccine;
     }
 
-    public String getSecondVaccine() {
+    public Boolean getSecondVaccine() {
         return secondVaccine;
     }
-    public String getVaccine_site()
-    {
-        return vaccine_site;
-    }
-    public String getVaccine_date()
-    {
-        return vaccine_date;
-    }
+
 }
