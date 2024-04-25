@@ -39,10 +39,8 @@ public class info_input extends AppCompatActivity {
         edit = new Intent(this, edit_info.class);
 
         student = new Student("", "", "", "", "", false, false, false);
-
-        sendToDB();
-
-
+        // Instantiate the vaccinate object
+        vaccinate = new vaccinate("", "");
     }
 
     public void sendToDB() {
@@ -54,10 +52,7 @@ public class info_input extends AppCompatActivity {
         student.setCanVaccine(Boolean.valueOf(Can_Vaccine.isChecked()));
         student.setFirstVaccine(Boolean.valueOf(First_Vaccine.isChecked()));
         student.setSecondVaccine(Boolean.valueOf(Second_Vaccine.isChecked()));
-        student.setID1(iD1.getText().toString());
 
-        // Instantiate the vaccinate object
-        vaccinate = new vaccinate("", "");
         vaccinate.setVaccine_site(vaccine_site.getText().toString());
         vaccinate.setVaccine_date(vaccine_date.getText().toString());
 
@@ -70,7 +65,7 @@ public class info_input extends AppCompatActivity {
     }
 
     public void next(View view) {
-        if (!(Can_Vaccine.isChecked() && (First_Vaccine.isChecked() || Second_Vaccine.isChecked())))
+        if ((!(Can_Vaccine.isChecked()) && (First_Vaccine.isChecked() || Second_Vaccine.isChecked())))
         {
             Toast.makeText(getApplicationContext(), "Cannot Vaccinate", Toast.LENGTH_SHORT).show();
         }
@@ -81,7 +76,17 @@ public class info_input extends AppCompatActivity {
         else
         {
             sendToDB();
-            edit.putExtra("stu_id", iD1.getText().toString());
+            edit.putExtra("name", student.getName());
+            edit.putExtra("lastName", student.getLastName());
+            edit.putExtra("id", student.getID1());
+            edit.putExtra("grade", student.getGrade());
+            edit.putExtra("classNumber", student.getClassNumber());
+            edit.putExtra("canVaccine", student.getCanVaccine());
+            edit.putExtra("firstVaccine", student.getFirstVaccine());
+            edit.putExtra("secondVaccine", student.getSecondVaccine());
+            edit.putExtra("vaccineSite", vaccinate.getVaccine_site());
+            edit.putExtra("vaccineDate", vaccinate.getVaccine_date());
+
             startActivity(edit);
         }
     }

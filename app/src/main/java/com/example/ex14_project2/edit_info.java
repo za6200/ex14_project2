@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -15,7 +16,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +25,7 @@ public class edit_info extends AppCompatActivity {
     Switch Can_Vaccine, First_Vaccine, Second_Vaccine;
     Student student;
     vaccinate vaccinate;
-    ArrayList<String> stuList = new ArrayList<String>();
-    ArrayList<Student> stuValues = new ArrayList<Student>();
-    Intent edit, fetures;
+    Intent features, edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,51 +41,39 @@ public class edit_info extends AppCompatActivity {
         Second_Vaccine = findViewById(R.id.Second_Vaccine);
         vaccine_site = findViewById(R.id.vaccine_site);
         vaccine_date = findViewById(R.id.vaccine_date);
+        features = new Intent(this, fetures.class);
         edit = getIntent();
-        fetures = new Intent(this, fetures.class);
-        add();
+        fillFormData();
+        sendToDB();
     }
-    public void add()
-    {
-        ValueEventListener stuListener = new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dS) {
-                stuList.clear();
-                stuValues.clear();
-                for(DataSnapshot data : dS.getChildren()) {
-                    String id_stud = data.getKey();
-                    if(id_stud.equals(edit.getStringExtra("stu_id")))
-                    {
-                        Student stuTmp = data.getValue(Student.class);
-                        Name.setText(stuTmp.getName());
-                        Last_Name.setText(stuTmp.getLastName());
-                        iD1.setText(stuTmp.getID1());
-                        Grade.setText(stuTmp.getGrade());
-                        Class_Number.setText(stuTmp.getClassNumber());
-                        Can_Vaccine.setChecked(stuTmp.getCanVaccine());
-                        First_Vaccine.setChecked(stuTmp.getFirstVaccine());
-                        Second_Vaccine.setChecked(stuTmp.getSecondVaccine());
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        };
-        refStudents.addValueEventListener(stuListener);
+    private void fillFormData() {
+        Name.setText(edit.getStringExtra("name"));
+        Last_Name.setText(edit.getStringExtra("lastName"));
+        iD1.setText(edit.getStringExtra("id"));
+        Grade.setText(edit.getStringExtra("grade"));
+        Class_Number.setText(edit.getStringExtra("classNumber"));
+        Can_Vaccine.setChecked(edit.getBooleanExtra("canVaccine", false));
+        First_Vaccine.setChecked(edit.getBooleanExtra("firstVaccine", false));
+        Second_Vaccine.setChecked(edit.getBooleanExtra("secondVaccine", false));
+        vaccine_site.setText(edit.getStringExtra("vaccineSite"));
+        vaccine_date.setText(edit.getStringExtra("vaccineDate"));
+
+
     }
-    public void sendToDB() {
+
+
+    private void sendToDB() {
+        student = new Student("","","","","",false, false, false);
         student.setName(Name.getText().toString());
         student.setLastName(Last_Name.getText().toString());
         student.setGrade(Grade.getText().toString());
         student.setClassNumber(Class_Number.getText().toString());
         student.setID1(iD1.getText().toString());
-        student.setCanVaccine(Boolean.valueOf(Can_Vaccine.isChecked()));
-        student.setFirstVaccine(Boolean.valueOf(First_Vaccine.isChecked()));
-        student.setSecondVaccine(Boolean.valueOf(Second_Vaccine.isChecked()));
-        student.setID1(iD1.getText().toString());
+        student.setCanVaccine(Can_Vaccine.isChecked());
+        student.setFirstVaccine(First_Vaccine.isChecked());
+        student.setSecondVaccine(Second_Vaccine.isChecked());
 
-        // Instantiate the vaccinate object
         vaccinate = new vaccinate("", "");
         vaccinate.setVaccine_site(vaccine_site.getText().toString());
         vaccinate.setVaccine_date(vaccine_date.getText().toString());
@@ -99,19 +85,18 @@ public class edit_info extends AppCompatActivity {
 
         refStudents.child(student.getGrade()).child(student.getClassNumber()).child(student.getID1()).setValue(dataMap);
     }
-    public void next2(View view) {
-        if (!(Can_Vaccine.isChecked() && (First_Vaccine.isChecked() || Second_Vaccine.isChecked())))
-        {
+
+    public void finish(View view) {
+        if ((!(Can_Vaccine.isChecked()) && (First_Vaccine.isChecked() || Second_Vaccine.isChecked()))) {
             Toast.makeText(getApplicationContext(), "Cannot Vaccinate", Toast.LENGTH_SHORT).show();
         }
-        else if (!(First_Vaccine.isChecked()) && Second_Vaccine.isChecked())
-        {
+        else if (!(First_Vaccine.isChecked()) && Second_Vaccine.isChecked()) {
             Toast.makeText(getApplicationContext(), "Do first vaccine first", Toast.LENGTH_SHORT).show();
         }
-        else
-        {
+        else {
+            refStudents.child(edit.getStringExtra("grade")).child(edit.getStringExtra("classNumber")).child(edit.getStringExtra("id")).removeValue();
             sendToDB();
-            startActivity(fetures);
+            startActivity(features);
         }
     }
 }
