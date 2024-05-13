@@ -3,22 +3,27 @@ package com.example.ex14_project2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-public class fetures extends AppCompatActivity {
-
+public class credits extends AppCompatActivity {
+    TextView textView;
     Intent features, edit;
     Intent credits, input;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fetures);
+        setContentView(R.layout.activity_credits);
+        textView = findViewById(R.id.textView);
         edit = new Intent(this, edit_info.class);
         input = new Intent(this, info_input.class);
         credits = new Intent(this, credits.class);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,4 +56,5 @@ public class fetures extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
